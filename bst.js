@@ -85,6 +85,47 @@ class Tree{
         }
     }
 
+    inOrder(root){
+        if(!root)return
+        else{
+            this.inOrder(root.left)
+            process.stdout.write(`${root.value} `)
+            this.inOrder(root.right)
+            
+        }
+    }
+
+    preOrder(root){
+        if(!root)return
+        else{
+            process.stdout.write(`${root.value} `)
+            this.inOrder(root.left)
+            this.inOrder(root.right)
+        }
+    }
+
+    postOrder(root){
+        if(!root)return
+        else{
+            this.inOrder(root.left)
+            this.inOrder(root.right)
+            process.stdout.write(`${root.value} `)
+        }
+    }
+
+    height(node){
+        if(!node) return 0
+        else{
+            return 1 + Math.max(this.height(node.left), this.height(node.right))
+        }
+    }
+
+    depth(root, node){
+        if(!root || root == node) return 1
+        else{
+            return 1 + Math.min(this.depth(root.left, node), this.depth(root.right, node))
+        }
+    }
     
 }
 
@@ -105,9 +146,8 @@ function getRandomInt() {
 
 let tree = new Tree()
 let root = tree.buildTree([1,2,3,4,5,6,7,8,9,10], 0, 9)
-
-tree.remove(root, 8)
-
-console.log(tree.find(10, root))
+let node = tree.find(10, root)
 prettyPrint(root)
+console.log(tree.depth(root, node))
+console.log(node.value)
 
