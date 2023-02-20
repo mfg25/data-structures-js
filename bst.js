@@ -91,7 +91,16 @@ class Tree{
             this.inOrder(root.left)
             process.stdout.write(`${root.value} `)
             this.inOrder(root.right)
-            
+        }
+    }
+
+    inOrderArray(arr, root){
+        if(!root) return arr
+        else{
+            this.inOrderArray(arr, root.left)
+            arr.push(root.value)
+            this.inOrderArray(arr, root.right)
+            return arr
         }
     }
 
@@ -126,7 +135,23 @@ class Tree{
             return 1 + Math.min(this.depth(root.left, node), this.depth(root.right, node))
         }
     }
-    
+
+    isBalanced(root){
+        if(!root)return true
+        else{
+            let diff = this.height(root.left) - this.height(root.right)
+            if(Math.abs(diff) > 1) return false
+            else return this.isBalanced(root.left) && this.isBalanced(root.right)
+        }
+    }
+
+    rebalance(root){
+        let array = []
+        array = this.inOrderArray(array, root)
+        let rootNode = this.buildTree(array, 0, array.length-1)
+        return rootNode
+    }
+
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -145,9 +170,17 @@ function getRandomInt() {
   
 
 let tree = new Tree()
-let root = tree.buildTree([1,2,3,4,5,6,7,8,9,10], 0, 9)
+let root = tree.buildTree([110,2,3,1,53,9,121,50,12,569], 0, 9)
+
+tree.insert(root, 600)
+tree.insert(root, 601)
+tree.insert(root, 602)
 let node = tree.find(10, root)
 prettyPrint(root)
-console.log(tree.depth(root, node))
-console.log(node.value)
+console.log(tree.isBalanced(root))
+console.log()
 
+
+let newRoot = tree.rebalance(root)
+prettyPrint(newRoot)
+console.log(tree.isBalanced(newRoot))
