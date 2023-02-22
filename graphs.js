@@ -12,7 +12,6 @@ class Node{
         return this.edgesList
     }
 
-    
 }
 
 class Graph{
@@ -24,8 +23,8 @@ class Graph{
         this.nodes.push(node)
     }
 
-    bfs(start, end){
-        let prev = this.solve(start)
+    shortestPath(start, end){
+        let prev = this.bfs(start)
 
         return this.reconstructPath(start, end, prev)
     }
@@ -43,7 +42,7 @@ class Graph{
         return []
     }
 
-    solve(start) {
+    bfs(start) {
         let visited = new Set()
         let queue = []
         let prev = {}
@@ -82,7 +81,7 @@ nodeE.connect(nodeB)
 nodeE.connect(nodeD)
 nodeD.connect(nodeE)
 
-console.log(graph.bfs(nodeA, nodeD))
+console.log(graph.shortestPath(nodeA, nodeD))
 
 
 
